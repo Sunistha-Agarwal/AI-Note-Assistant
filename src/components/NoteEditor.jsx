@@ -1,5 +1,5 @@
 // src/components/NoteEditor.jsx
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditor, EditorContent , FloatingMenu,BubbleMenu} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -7,6 +7,7 @@ import Strike from '@tiptap/extension-strike';
 import Code from '@tiptap/extension-code';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import { summarizeNote } from '../services/geminiService';
 
 export default function NoteEditor({ content, onChange }) {
     console.log(content)
@@ -14,8 +15,8 @@ export default function NoteEditor({ content, onChange }) {
     extensions:[
       StarterKit,
       Underline,
-      Strike,
-      Code,
+    //   Strike,
+    //   Code,
       Highlight,
       Link.configure({ openOnClick: false }),
     ],
@@ -26,6 +27,7 @@ export default function NoteEditor({ content, onChange }) {
     },
   });
 
+  const [summary,setSummary] = useState("");
    // Update editor content when `content` prop changes
   useEffect(() => {
     if (editor && content) {
@@ -34,6 +36,18 @@ export default function NoteEditor({ content, onChange }) {
   }, [content, editor]); 
 
   console.log(editor.content)
+
+  function handleSummarizeNote() {
+      if (!editor) return;
+      const currentContent = editor.getText();
+  
+      summarizeNote(currentContent).then(summary => {
+        if (summary) {
+          setSummary(summary);
+        }
+      });
+    }
+
   return (
     <div className="border rounded p-4">
       <EditorContent editor={editor} />
@@ -43,8 +57,8 @@ export default function NoteEditor({ content, onChange }) {
           <button onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'font-bold' : ''}>B</button>
           <button onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'italic' : ''}>I</button>
           <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={editor.isActive('underline') ? 'underline' : ''}>U</button>
-          <button onClick={() => editor.chain().focus().toggleStrike().run()} className={editor.isActive('strike') ? 'line-through' : ''}>S</button>
-          <button onClick={() => editor.chain().focus().toggleCode().run()} className="bg-gray-200 px-1">`</button>
+          
+          {/* <button onClick={() => editor.chain().focus().toggleCode().run()} className="bg-gray-200 px-1">`</button> */}
           <button onClick={() => editor.chain().focus().toggleHighlight().run()} className="bg-yellow-200 px-1">H</button>
           <button onClick={() => {
             const url = prompt("Enter link:");
@@ -52,6 +66,18 @@ export default function NoteEditor({ content, onChange }) {
           }}>🔗</button>
         </div>
       </BubbleMenu>
+      <button
+         onClick={handleSummarizeNote} 
+         className="mt-2 px-3 py-1 bg-blue-500 text-white rounded">
+        Summarize Note
+      </button>
+      {summary && (
+        <div className="mt-4 p-3 bg-gray-100 rounded border">
+          <strong>Summary:</strong>
+          <div>{summary}</div>
+        </div>
+      ) }
+
     </div>
   );
 }

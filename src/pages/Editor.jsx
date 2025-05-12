@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import NoteEditor from '../components/NoteEditor'; 
 import { updateNote,getNoteById } from '../services/firestoreService';
 
+
 export default function Editor() {
   const { id } = useParams();//destructuring
   const [note, setNote] = useState({
     title:"Type your title here...",
     content:"Type your note content here...", // initial HTML content
   });
+  const [saveStatus, setSaveStatus] = useState("")
 
   useEffect(() => {
     async function fetchNote(){
@@ -36,12 +38,15 @@ export default function Editor() {
   };
 
   const handleSave = async() => {
-    console.log('Saving to Firebase:', note);
+    setSaveStatus("saving")
     await updateNote(id, {
     title: note.title,
     content: note.content, // HTML string from TipTap
-});
+    });
+    setSaveStatus("saved");
+    setTimeout(()=> setSaveStatus(""),2000);
   };
+
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -57,6 +62,12 @@ export default function Editor() {
       <button onClick={handleSave} className="mt-4 bg-blue-600 text-white px-4 py-2 rounded">
         Save
       </button>
+       {saveStatus === "saving" && (
+        <div className="mt-2 text-yellow-600">Saving...</div>
+      )}
+      {saveStatus === "saved" && (
+        <div className="mt-2 text-green-600">Note saved!</div>
+      )}         
     </div>
   );
 }
