@@ -1,6 +1,6 @@
 // src/pages/Dashboard.jsx
 import { useEffect, useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router';
 import { getAllNotes,deleteNote } from '../services/firestoreService';
 
 export default function Dashboard() {

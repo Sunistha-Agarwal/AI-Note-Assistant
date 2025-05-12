@@ -1,5 +1,5 @@
 import './styles/App.css'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router';
 import Dashboard from './pages/Dashboard';
 import NewNote from './pages/NewNote';
 import Editor from './pages/Editor';

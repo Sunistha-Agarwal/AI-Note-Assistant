@@ -1,6 +1,6 @@
 // src/pages/NewNote.jsx
 import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { createNote } from '../services/firestoreService';
 
 export default function NewNote() {

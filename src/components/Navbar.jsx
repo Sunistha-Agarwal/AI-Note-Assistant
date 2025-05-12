@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 
 export default function Navbar() {
   const { pathname } = useLocation();
