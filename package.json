@@ -10,7 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@tailwindcss/vite": "^4.1.5",
+    "@tiptap/extension-bubble-menu": "^2.12.0",
+    "@tiptap/extension-code": "^2.12.0",
+    "@tiptap/extension-highlight": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-strike": "^2.12.0",
+    "@tiptap/extension-underline": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "firebase": "^11.7.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.5"
