@@ -1,5 +1,5 @@
 // src/pages/Editor.jsx
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import NoteEditor from '../components/NoteEditor'; 
 import { updateNote,getNoteById } from '../services/firestoreService';
