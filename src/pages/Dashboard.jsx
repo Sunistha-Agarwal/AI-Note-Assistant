@@ -2,21 +2,25 @@
 import { useEffect, useState } from 'react';
 import { Link,useNavigate } from 'react-router';
 import { getAllNotes,deleteNote } from '../services/firestoreService';
+import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
+  const {user} = useAuth();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();  
 
   useEffect(() => {
+    if(!user) return;
+
     async function fetchNotes() {
-      const allNotes = await getAllNotes();
+      const allNotes = await getAllNotes(user.uid);
       setNotes(allNotes);
       setLoading(false);
     }
 
     fetchNotes();
-  }, []);
+  }, [user]);
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
@@ -45,7 +49,7 @@ export default function Dashboard() {
                 e.stopPropagation();
                 e.preventDefault();
                 navigate("/")
-                deleteNote(note.id)
+                deleteNote(user.uid,note.id)
                 setNotes(prevNotes => prevNotes.filter(n => n.id !== note.id))
               }}
                 //arrow bcz w/o arrow the function is directly called when the comp renders not when it is clicked
