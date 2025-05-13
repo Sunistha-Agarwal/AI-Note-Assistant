@@ -1,12 +1,36 @@
-# React + Vite
+# FlairNotes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FlairNotes is an intelligent note-taking web application designed to help users create, manage, and organize notes efficiently using AI-powered features.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Create, Edit, and Delete Notes:** Manage your notes with a simple and intuitive interface.
+- **AI-Powered Summaries:** Get smart summaries for your notes using Gemini API.
+- **User Authentication:** Secure login and registration with Firebase Authentication.
+- **Rich Text Editing:** Write and format notes with Tiptap editor.
+- **Responsive Design:** Works seamlessly across devices.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+
+- **React.js:** Modern UI development.
+- **Context API:** State management.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
+- **Tiptap:** Rich text editor for notes.
+
+### Backend & Services
+
+- **Firebase:** Backend as a Service (BaaS) for authentication and hosting.
+- **Firestore:** NoSQL cloud database for storing notes and user data.
+- **Gemini API:** AI-powered note summaries.
+
+
+## Key Functions
+
+- `createNote`: Add a new note to Firestore.
+- `editNote`: Update an existing note in Firestore.
+- `deleteNote`: Remove a note from Firestore.
+- `getNotes`: Retrieve all notes for a user.
+- `summarizeNote`: Generate AI-powered summaries using Gemini API.
+- `registerUser` / `loginUser`: User authentication with Firebase.
