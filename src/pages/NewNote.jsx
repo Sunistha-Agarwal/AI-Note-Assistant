@@ -16,8 +16,7 @@ export default function NewNote() {
       useRef.current = true;
 
       const newNoteId = await createNote(user.uid);
-      // navigate(`/note/${newNoteId}`);
-      navigate('/')
+      navigate(`/note/${newNoteId}`);
     }
 
     createAndRedirect();
