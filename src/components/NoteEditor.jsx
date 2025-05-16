@@ -33,6 +33,7 @@ export default function NoteEditor({ content, onChange }) {
     if (editor && content !== editor.getHTML()) {
       editor.commands.setContent(content);
     }
+    console.log(content)
   }, [content, editor]);
 
   function handleSummarizeNote() {
