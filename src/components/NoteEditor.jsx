@@ -10,7 +10,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
-import { summarizeNote } from "../services/geminiService";
+import { summarizeNote,completeNote } from "../services/geminiService";
 
 export default function NoteEditor({ content, onChange }) {
   const editor = useEditor({
@@ -45,6 +45,16 @@ export default function NoteEditor({ content, onChange }) {
         setSummary(summary);
       }
     });
+  }
+
+  function handleAutoComplete(){
+    if(!editor) return;
+    const currentContent = editor.getText();
+    
+    completeNote(currentContent).then((response)=>{
+      if(editor && response)
+      editor.commands.setContent(response)
+    })
   }
 
   return (
@@ -135,6 +145,12 @@ export default function NoteEditor({ content, onChange }) {
         className="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
       >
         Summarize Note
+      </button>
+      <button
+        onClick={handleAutoComplete}
+        className="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
+      >
+        AutoComplete Note
       </button>
       {summary && (
         <div className="mt-4 p-3 bg-gray-100 rounded border">
