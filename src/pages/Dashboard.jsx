@@ -48,7 +48,7 @@ export default function Dashboard() {
               onClick= {(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                navigate("/")
+                navigate("/dashboard")
                 deleteNote(user.uid,note.id)
                 setNotes(prevNotes => prevNotes.filter(n => n.id !== note.id))
               }}

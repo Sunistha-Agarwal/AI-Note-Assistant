@@ -7,7 +7,9 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Editor() {
   const { user } = useAuth();
-  const { noteId } = useParams(); //destructuring
+  const { id } = useParams();
+  //while destructuring variable name should be equal to what is there in object
+  //id refers to the noteId
   const [note, setNote] = useState({
     title: "Type your title here...",
     content: "Type your note content here...", // initial HTML content
@@ -15,17 +17,13 @@ export default function Editor() {
   const [saveStatus, setSaveStatus] = useState("");
 
   useEffect(() => {
-    if (!user || !noteId) return;
+    if (!user || !id) return;
 
     async function fetchNote() {
-      const fetchedNote = await getNoteById(user.uid, noteId);
-      console.log(fetchedNote);
+
+      const fetchedNote = await getNoteById(user.uid, id);
       if (fetchedNote) {
         setNote({
-          title: fetchedNote.title || "Untitled Note",
-          content: fetchedNote.content || "No content yet.",
-        });
-        console.log("Updated Note State:", {
           title: fetchedNote.title || "Untitled Note",
           content: fetchedNote.content || "No content yet.",
         });
@@ -33,7 +31,7 @@ export default function Editor() {
     }
 
     fetchNote();
-  }, [user, noteId]);
+  }, [user, id]);
 
   // When TipTap updates the content, this is called
   const handleContentChange = (updatedHtml) => {
@@ -41,12 +39,12 @@ export default function Editor() {
   };
 
   const handleSave = async () => {
-   if (!user || !user.uid || !noteId) {
+   if (!user || !user.uid || !id) {
     setSaveStatus("error");
     return;
   }
     try {
-    await updateNote(user.uid, noteId, {
+    await updateNote(user.uid, id, {
       title: note.title,
       content: note.content,
     });
@@ -54,7 +52,6 @@ export default function Editor() {
     setTimeout(() => setSaveStatus(""), 2000);
   } catch (error) {
     setSaveStatus("error");
-    console.error("Failed to save note:", error);
   }
   };
 
